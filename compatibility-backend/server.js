@@ -34,21 +34,27 @@ app.post("/submit", (req, res) => {
     escapeCSV(comment)
   ].join(",") + "\n";
 
-  const filePath = path.join(__dirname, "data", "compatibility_results.csv");
+  // Use /tmp so it works on Render
+  const filePath = path.join("/tmp", "compatibility_results.csv");
 
   fs.appendFile(filePath, row, (err) => {
     if (err) {
       console.error("Error writing to file:", err);
-      return res.status(500).json({ success: false });
+      return res.status(500).json({ success: false, message: "Failed to save file" });
     }
-    res.json({ success: true });
+    res.json({ success: true, message: "Data saved successfully." });
   });
 });
 
 // Download CSV
 app.get("/download", (req, res) => {
-  const filePath = path.join(__dirname, "data", "compatibility_results.csv");
-  res.download(filePath);
+  const filePath = path.join("/tmp", "compatibility_results.csv");
+  res.download(filePath, (err) => {
+    if (err) {
+      console.error("Error downloading file:", err);
+      res.status(500).send("Failed to download file.");
+    }
+  });
 });
 
 app.listen(PORT, () => {
