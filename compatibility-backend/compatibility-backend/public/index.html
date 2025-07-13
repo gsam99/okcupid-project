@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Web App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <form class="profile-load-form">
+    <div class="top-inputs-container">
+      <div class="profile-id-input">
+        <label for="surveyor-name">Coder's Name:</label>
+        <input type="text" id="surveyor-name" placeholder="Enter Surveyor Name" />
+      </div>
+
+      <div class="profile-id-input">
+        <label for="group-id">Group ID:</label>
+        <input type="number" id="group-id" placeholder="Enter Group ID" />
+      </div>
+
+      <div class="profile-id-input">
+        <label for="m-id">Male ID:</label>
+        <input type="number" id="m-id" placeholder="Enter Male ID">
+      </div>
+
+      <div class="profile-id-input">
+        <label for="f-id">Female ID:</label>
+        <input type="number" id="f-id" placeholder="Enter Female ID">
+      </div>
+    </div>
+
+    <div class="form-button-container">
+      <button type="button" id="load-button">Load</button>
+    </div>
+  </form>
+
+  <div class="container">
+    <!-- Male Side -->
+    <div class="male-side">
+      <h2>Men's Profile</h2>
+
+      <div class="button-group">
+        <button type="prev">Prev</button>
+        <button type="next">Next</button>
+      </div>
+      <p style="text-align: center;">/*Prev and Next Disabled*/</p>
+
+      <div class="parameters">
+        <p>Men's features</p>
+        <table id="m-profile-features">
+          <tbody>
+            <tr><th>age</th><td id="m-age"></td></tr>
+            <tr><th>status</th><td id="m-status"></td></tr>
+            <tr><th>gender</th><td id="m-gender"></td></tr>
+            <tr><th>orientation</th><td id="m-orientation"></td></tr>
+            <tr><th>body-type</th><td id="m-bodytype"></td></tr>
+            <tr><th>Diet</th><td id="m-diet"></td></tr>
+            <tr><th>Alcohol</th><td id="m-alcohol"></td></tr>
+            <tr><th>Drugs</th><td id="m-drugs"></td></tr>
+            <tr><th>Education</th><td id="m-education"></td></tr>
+            <tr><th>Ethinicity</th><td id="m-ethinicity"></td></tr>
+            <tr><th>Height</th><td id="m-height"></td></tr>
+            <tr><th>Income</th><td id="m-income"></td></tr>
+            <tr><th>Job</th><td id="m-job"></td></tr>
+            <tr><th>last Online</th><td id="m-online"></td></tr>
+            <tr><th>Location</th><td id="m-location"></td></tr>
+            <tr><th>Offspring</th><td id="m-kids"></td></tr>
+            <tr><th>pets</th><td id="m-pets"></td></tr>
+            <tr><th>religion</th><td id="m-religion"></td></tr>
+            <tr><th>Zodiac Sign</th><td id="m-sign"></td></tr>
+            <tr><th>Smoking Habit</th><td id="m-Smoke"></td></tr>
+            <tr><th>Speaking Language/s</th><td id="m-language"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="male-essay">
+        <p>essay questions</p>
+        <table>
+          <tbody>
+            <tr><th>essay0</th><td id="m-essay0"></td></tr>
+            <tr><th>essay1</th><td id="m-essay1"></td></tr>
+            <tr><th>essay2</th><td id="m-essay2"></td></tr>
+            <tr><th>essay3</th><td id="m-essay3"></td></tr>
+            <tr><th>essay4</th><td id="m-essay4"></td></tr>
+            <tr><th>essay5</th><td id="m-essay5"></td></tr>
+            <tr><th>essay6</th><td id="m-essay6"></td></tr>
+            <tr><th>essay7</th><td id="m-essay7"></td></tr>
+            <tr><th>essay8</th><td id="m-essay8"></td></tr>
+            <tr><th>essay9</th><td id="m-essay9"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Female Side -->
+    <div class="female-side">
+      <h2>Women's Profile</h2>
+
+      <div class="button-group">
+        <button type="prev">Prev</button>
+        <button type="next">Next</button>
+        
+      </div>
+      <p style="text-align: center;">/*Prev and Next Disabled*/</p>
+
+      <div class="parameters">
+        <p>Women's features</p>
+        <table id="f-profile-features">
+          <tbody>
+            <tr><th>age</th><td id="f-age"></td></tr>
+            <tr><th>status</th><td id="f-status"></td></tr>
+            <tr><th>gender</th><td id="f-gender"></td></tr>
+            <tr><th>orientation</th><td id="f-orientation"></td></tr>
+            <tr><th>body-type</th><td id="f-bodytype"></td></tr>
+            <tr><th>Diet</th><td id="f-diet"></td></tr>
+            <tr><th>Alcohol</th><td id="f-alcohol"></td></tr>
+            <tr><th>Drugs</th><td id="f-drugs"></td></tr>
+            <tr><th>Education</th><td id="f-education"></td></tr>
+            <tr><th>Ethinicity</th><td id="f-ethinicity"></td></tr>
+            <tr><th>Height</th><td id="f-height"></td></tr>
+            <tr><th>Income</th><td id="f-income"></td></tr>
+            <tr><th>Job</th><td id="f-job"></td></tr>
+            <tr><th>last Online</th><td id="f-online"></td></tr>
+            <tr><th>Location</th><td id="f-location"></td></tr>
+            <tr><th>Offspring</th><td id="f-kids"></td></tr>
+            <tr><th>pets</th><td id="f-pets"></td></tr>
+            <tr><th>religion</th><td id="f-religion"></td></tr>
+            <tr><th>Zodiac Sign</th><td id="f-sign"></td></tr>
+            <tr><th>Smoking Habit</th><td id="f-Smoke"></td></tr>
+            <tr><th>Speaking Language/s</th><td id="f-language"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="essay">
+        <p>essay questions</p>
+        <table>
+          <tbody>
+            <tr><th>essay0</th><td id="f-essay0"></td></tr>
+            <tr><th>essay1</th><td id="f-essay1"></td></tr>
+            <tr><th>essay2</th><td id="f-essay2"></td></tr>
+            <tr><th>essay3</th><td id="f-essay3"></td></tr>
+            <tr><th>essay4</th><td id="f-essay4"></td></tr>
+            <tr><th>essay5</th><td id="f-essay5"></td></tr>
+            <tr><th>essay6</th><td id="f-essay6"></td></tr>
+            <tr><th>essay7</th><td id="f-essay7"></td></tr>
+            <tr><th>essay8</th><td id="f-essay8"></td></tr>
+            <tr><th>essay9</th><td id="f-essay9"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="compatibility-evaluator">
+  <label>Compatibility Score</label><br>
+  <div class="score-radio-group">
+    <label>
+      <input type="radio" name="score" value="0" />
+      0 - No compatibility at all
+    </label><br>
+    <label>
+      <input type="radio" name="score" value="1" />
+      1 - Weak match with little compatibility
+    </label><br>
+    <label>
+      <input type="radio" name="score" value="2" />
+      2 - Good match with moderate compatibility
+    </label><br>
+    <label>
+      <input type="radio" name="score" value="3" />
+      3 - Perfect match with strong compatibility
+    </label><br>
+    
+    
+    
+  </div>
+  <label for="message">Compatibility Comment</label><br>
+  <textarea id="message" name="message" rows="4" cols="50" placeholder="Type your comment here"></textarea><br>
+  <button type="submit">Submit</button>
+</div>
+
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="jscript.js"></script>
+</body>
+</html>
