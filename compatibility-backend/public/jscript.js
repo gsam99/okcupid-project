@@ -13,7 +13,6 @@ window.addEventListener('DOMContentLoaded', () => {
           profiles = results.data.map(row => ({
             ...row,
             Group_ID: String(row.Group_ID ?? "").trim(),
-            // Strip ".0" if numeric
             Male_ID: row.Male_ID != null ? String(parseInt(row.Male_ID)).trim() : "",
             Female_ID: row.Female_ID != null ? String(parseInt(row.Female_ID)).trim() : ""
           }));
@@ -26,7 +25,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 document.getElementById("load-button").addEventListener("click", () => {
-  // Normalize user input
   const groupId = String(document.getElementById("group-id").value).trim();
   const maleId = String(document.getElementById("m-id").value).trim();
   const femaleId = String(document.getElementById("f-id").value).trim();
@@ -38,12 +36,10 @@ document.getElementById("load-button").addEventListener("click", () => {
 
   console.log("Searching for:", { groupId, maleId, femaleId });
 
-  // Find male profile (in male rows)
   const maleProfile = profiles.find(row =>
     row.Group_ID === groupId && row.Male_ID === maleId
   );
 
-  // Find female profile (in female rows)
   const femaleProfile = profiles.find(row =>
     row.Group_ID === groupId && row.Female_ID === femaleId
   );
@@ -60,7 +56,6 @@ document.getElementById("load-button").addEventListener("click", () => {
     fillProfile(femaleProfile, "f");
   }
 
-  // Reset compatibility section
   document.getElementById("message").value = "";
   const checkedRadio = document.querySelector('input[name="score"]:checked');
   if (checkedRadio) checkedRadio.checked = false;
@@ -105,7 +100,9 @@ function simplifyFieldName(field) {
 document.addEventListener("DOMContentLoaded", () => {
   const submitButton = document.querySelector("button[type='submit']");
   if (submitButton) {
-    submitButton.addEventListener("click", () => {
+    submitButton.addEventListener("click", (e) => {
+      e.preventDefault();  // Prevent form reload on submit
+
       const score = document.querySelector('input[name="score"]:checked')?.value;
       const comment = document.getElementById("message")?.value;
       const surveyorName = document.getElementById("surveyor-name")?.value.trim();
@@ -118,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      fetch("http://localhost:3001/submit", {
+      fetch("/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -133,7 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("Submission failed.");
         }
       })
-      .catch(err => console.error("Error:", err));
+      .catch(err => {
+        console.error("Error:", err);
+        alert("An error occurred while submitting. Please try again.");
+      });
     });
   }
 });
