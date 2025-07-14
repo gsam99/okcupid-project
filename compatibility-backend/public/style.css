@@ -33,12 +33,21 @@ main {
   color: #333;
   font-size: 14px;
 }
-
-/* Center Load button under the inputs */
 .form-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 15px;
+  align-items: center; /* if you want vertical centering too */
+  margin: 20px auto;
+}
+
+
+/* Center Load button under the inputs */
+.form-button-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  min-width: 120px;
+  cursor: pointer;
 }
 
 /* Center male and female ID inputs in their sections */
