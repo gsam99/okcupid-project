@@ -1,6 +1,7 @@
 console.log("HelloWorld");
 
 let profiles = [];
+let loadTimestamp = null; // NEW: Track when 'Load' was clicked
 
 window.addEventListener('DOMContentLoaded', () => {
   fetch('/data/sf_heterosexual_grouped_dataset.csv')
@@ -59,6 +60,10 @@ document.getElementById("load-button").addEventListener("click", () => {
   document.getElementById("message").value = "";
   const checkedRadio = document.querySelector('input[name="score"]:checked');
   if (checkedRadio) checkedRadio.checked = false;
+
+  // NEW: Record timestamp
+  loadTimestamp = Date.now();
+  console.log("Load timestamp set:", new Date(loadTimestamp).toLocaleTimeString());
 });
 
 function fillProfile(person, prefix) {
@@ -115,12 +120,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // NEW: Calculate time taken
+      const submitTimestamp = Date.now();
+      const timeTakenMs = submitTimestamp - (loadTimestamp || submitTimestamp);
+      console.log(`Time taken between load and submit: ${timeTakenMs} ms`);
+
       fetch("/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ surveyorName, groupId, maleId, femaleId, score, comment })
+        body: JSON.stringify({ surveyorName, groupId, maleId, femaleId, score, comment, timeTakenMs })
       })
       .then(res => res.json())
       .then(data => {

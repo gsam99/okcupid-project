@@ -35,7 +35,7 @@ app.get("/test-db", async (req, res) => {
 
 // POST endpoint to save compatibility data
 app.post("/submit", async (req, res) => {
-  const { surveyorName, groupId, maleId, femaleId, score, comment } = req.body;
+  const { surveyorName, groupId, maleId, femaleId, score, comment, timeTakenMs } = req.body;
 
   if (!surveyorName || !groupId || !maleId || !femaleId || !score) {
     return res.status(400).json({ success: false, message: "Missing fields" });
@@ -44,11 +44,11 @@ app.post("/submit", async (req, res) => {
   try {
     const query = `
       INSERT INTO compatibility_results
-      (surveyor_name, group_id, male_id, female_id, score, comment)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      (surveyor_name, group_id, male_id, female_id, score, comment, load_to_submit_ms)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING id
     `;
-    const values = [surveyorName, groupId, maleId, femaleId, score, comment];
+    const values = [surveyorName, groupId, maleId, femaleId, score, comment, timeTakenMs];
     const result = await pool.query(query, values);
 
     res.json({ success: true, message: "Data saved successfully.", id: result.rows[0].id });
@@ -64,7 +64,7 @@ app.get("/download", async (req, res) => {
     const result = await pool.query("SELECT * FROM compatibility_results ORDER BY created_at DESC");
     const rows = result.rows;
 
-    const csvHeader = "Surveyor Name,Group ID,Male ID,Female ID,Score,Comment,Created At\n";
+    const csvHeader = "Surveyor Name,Group ID,Male ID,Female ID,Score,Comment,Created At,Load to Submit (ms)\n";
     const csvRows = rows
       .map(r =>
         [
@@ -74,7 +74,8 @@ app.get("/download", async (req, res) => {
           r.female_id,
           r.score,
           r.comment || "",
-          r.created_at ? r.created_at.toISOString() : ""
+          r.created_at ? r.created_at.toISOString() : "",
+          r.load_to_submit_ms || ""
         ]
           .map(val => `"${String(val).replace(/"/g, '""')}"`)
           .join(",")
