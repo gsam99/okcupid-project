@@ -119,6 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Please fill in all fields and score before submitting.");
         return;
       }
+      if (!comment || comment.trim().length < 100) {
+           alert("Please enter a compatibility comment of at least 100 characters (including spaces).");
+           return;
+      }
 
       // NEW: Calculate time taken
       const submitTimestamp = Date.now();
