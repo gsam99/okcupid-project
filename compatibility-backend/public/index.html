@@ -148,34 +148,35 @@
       </div>
     </div>
   </div>
-<div class="compatibility-evaluator">
-  <label>Compatibility Score</label><br>
-  <div class="score-radio-group">
-    <label>
-      <input type="radio" name="score" value="0" />
-      0 - No compatibility at all
-    </label><br>
-    <label>
-      <input type="radio" name="score" value="1" />
-      1 - Weak match with little compatibility
-    </label><br>
-    <label>
-      <input type="radio" name="score" value="2" />
-      2 - Good match with moderate compatibility
-    </label><br>
-    <label>
-      <input type="radio" name="score" value="3" />
-      3 - Perfect match with strong compatibility
-    </label><br>
-    
-    
-    
+<form id="compatibilityForm" class="profile-load-form">
+  <div class="compatibility-evaluator">
+    <label>Compatibility Score</label><br>
+    <div class="score-radio-group">
+      <label>
+        <input type="radio" name="score" value="0" />
+        0 - No compatibility at all
+      </label><br>
+      <label>
+        <input type="radio" name="score" value="1" />
+        1 - Weak match with little compatibility
+      </label><br>
+      <label>
+        <input type="radio" name="score" value="2" />
+        2 - Good match with moderate compatibility
+      </label><br>
+      <label>
+        <input type="radio" name="score" value="3" />
+        3 - Perfect match with strong compatibility
+      </label><br>
+      
+      
+      
+    </div>
+    <label for="message">Compatibility Comment</label><br>
+    <textarea id="message" name="message" rows="4" cols="50" placeholder="Type your comment here"></textarea><br>
+    <button type="submit">Submit</button>
   </div>
-  <label for="message">Compatibility Comment</label><br>
-  <textarea id="message" name="message" rows="4" cols="50" placeholder="Type your comment here"></textarea><br>
-  <button type="submit">Submit</button>
-</div>
-
+</form>
 
   </div>
 </main>

@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
            alert("Please enter a compatibility comment of at least 100 characters (including spaces).");
            return;
       }
-
+      
       // NEW: Calculate time taken
       const submitTimestamp = Date.now();
       const timeTakenMs = submitTimestamp - (loadTimestamp || submitTimestamp);
@@ -140,8 +140,19 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         if (data.success) {
           alert("Submitted successfully!");
+          //location.reload(); // ✅ Refresh the page on success
+          document.getElementById("group-id").value = "";
+          document.getElementById("m-id").value = "";
+          document.getElementById("f-id").value = "";
+          document.getElementById("message").value = "";
+          const selectedScore = document.querySelector('input[name="score"]:checked');
+          if (selectedScore) selectedScore.checked = false;
+          document.querySelectorAll("#m-profile-features td, #f-profile-features td").forEach(td => td.textContent = "");
+          document.querySelectorAll(".male-essay td, .essay td").forEach(td => td.textContent = "");
+
+          
         } else {
-          alert("Submission failed.");
+          alert(data.message || "Submission failed.");
         }
       })
       .catch(err => {

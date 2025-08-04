@@ -1,5 +1,8 @@
-// Load environment variables
+console.log("Server script loaded");
+
+
 require("dotenv").config();
+
 
 const express = require("express");
 const cors = require("cors");
@@ -7,20 +10,25 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const { Pool } = require("pg");
 
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 
 app.use(cors());
 app.use(bodyParser.json());
 
+
 // Serve static files from public
 app.use(express.static(path.join(__dirname, "public")));
+
 
 // Connect to PostgreSQL (always use SSL)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
+
 
 // TEST route to verify DB connectivity
 app.get("/test-db", async (req, res) => {
@@ -33,15 +41,26 @@ app.get("/test-db", async (req, res) => {
   }
 });
 
+
 // POST endpoint to save compatibility data
-app.post("/submit", async (req, res) => {
+app.post("/submit", async (req, res) => {      console.log("POST /submit called with body111:", req.body);
+
+
   const { surveyorName, groupId, maleId, femaleId, score, comment, timeTakenMs } = req.body;
 
+
   if (!surveyorName || !groupId || !maleId || !femaleId || !score) {
+
+
     return res.status(400).json({ success: false, message: "Missing fields" });
   }
+    console.log("POST /submit called with body1:", req.body);
+
 
   try {
+    console.log("POST /submit called with body:", req.body);
+
+
     const query = `
       INSERT INTO compatibility_results
       (surveyor_name, group_id, male_id, female_id, score, comment, load_to_submit_ms)
@@ -51,18 +70,39 @@ app.post("/submit", async (req, res) => {
     const values = [surveyorName, groupId, maleId, femaleId, score, comment, timeTakenMs];
     const result = await pool.query(query, values);
 
+
     res.json({ success: true, message: "Data saved successfully.", id: result.rows[0].id });
   } catch (error) {
     console.error("Error saving data to PostgreSQL:", error);
-    res.status(500).json({ success: false, message: "Failed to save data." });
+    console.error("Error saving data to PostgreSQL:", error); // full error
+    //log.console("Error code:", error.code); // log specific code
+    console.log("Error code:", error.code);
+    console.log("Hello");
+
+
+
+    if (error.code === '23505') {
+      console.log("Hello");
+      // PostgreSQL unique constraint violation
+       return res.status(400).json({
+        success: false,
+        message: "You already reviewed this pair. Duplicate submissions are not allowed."
+      });
+    }
+      console.log("Other error, sending generic failure");
+
+
+    return res.status(500).json({ success: false, message: "Failed to save data" });
   }
 });
+
 
 // Download all records as CSV
 app.get("/download", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM compatibility_results ORDER BY created_at DESC");
     const rows = result.rows;
+
 
     const csvHeader = "Surveyor Name,Group ID,Male ID,Female ID,Score,Comment,Created At,Load to Submit (ms)\n";
     const csvRows = rows
@@ -82,7 +122,9 @@ app.get("/download", async (req, res) => {
       )
       .join("\n");
 
+
     const csvContent = csvHeader + csvRows;
+
 
     res.setHeader("Content-disposition", "attachment; filename=compatibility_results.csv");
     res.set("Content-Type", "text/csv");
@@ -92,6 +134,7 @@ app.get("/download", async (req, res) => {
     res.status(500).send("Failed to download file.");
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
