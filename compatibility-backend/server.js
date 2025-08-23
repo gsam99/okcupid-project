@@ -81,18 +81,18 @@ app.post("/submit", async (req, res) => {      console.log("POST /submit called 
 
 
 
-    //if (error.code === '23505') {
-    //  console.log("Hello");
+    if (error.code === '23505') {
+      console.log("Hello");
       // PostgreSQL unique constraint violation
-    //   return res.status(400).json({
-     //   success: false,
-      //  message: "You already reviewed this pair. Duplicate submissions are not allowed."
-      //});
-    //}
-    //  console.log("Other error, sending generic failure");
+       return res.status(400).json({
+        success: false,
+        message: "You already reviewed this pair. Duplicate submissions are not allowed."
+      });
+    }
+      console.log("Other error, sending generic failure");
 
 
-   // return res.status(500).json({ success: false, message: "Failed to save data" });
+   return res.status(500).json({ success: false, message: "Failed to save data" });
   }
 });
 
